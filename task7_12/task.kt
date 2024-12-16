@@ -1,9 +1,5 @@
 package task7_12
 
-
-import task7_12.Student
-import task7_12.Teacher
-
 open class Person(var name:String, var age: Int)
 {
     fun display()
@@ -33,9 +29,7 @@ class School
     companion object
     {
         private var TotalPeople = 0
-
     }
-
     fun addPerson(st:Student)
     {
         TotalPeople++
@@ -44,12 +38,10 @@ class School
     {
         TotalPeople++
     }
-
     fun getTotalPeople(): Int
     {
         return TotalPeople
     }
-
 }
 fun main()
 {
@@ -69,8 +61,7 @@ fun main()
     s1.addPerson(t2)
     s1.addPerson(t3)
 
-    println("Total num: "+s1.getTotalPeople())
-    println("\nStudents:")
+    println("Students:")
     stu1.display()
     stu2.display()
     stu3.display()
@@ -80,6 +71,5 @@ fun main()
     t2.teacher()
     t3.teacher()
 
-
-
+    println("\nTotal num: "+s1.getTotalPeople())
 }
