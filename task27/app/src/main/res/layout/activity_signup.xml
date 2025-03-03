@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="#300E88">
+
+        <TextView
+            android:id="@+id/txttitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inventor.io"
+            android:textSize="60dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_marginTop="30dp"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtid"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="id"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="180dp"/>-->
+
+        <EditText
+            android:id="@+id/edtid"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="190dp"
+            android:hint="Enter ID"
+            android:background="@android:color/white"
+            android:padding="12dp"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtname"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Name"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="250dp"/>-->
+
+        <EditText
+            android:id="@+id/edtname"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="250dp"
+            android:hint="Enter Name"
+            android:background="@android:color/white"
+            android:padding="12dp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtsurname"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Surname"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="320dp"/>-->
+
+        <EditText
+            android:id="@+id/edtsurname"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="310dp"
+            android:hint="Enter Surname"
+            android:background="@android:color/white"
+            android:padding="12dp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtemail"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Email"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="380dp"/>-->
+
+        <EditText
+            android:id="@+id/edtemail"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="Enter E-mail"
+            android:layout_marginTop="370dp"
+            android:background="@android:color/white"
+            android:padding="12dp" />
+
+        <TextView
+            android:id="@+id/txtgender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="430dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="470dp"
+            android:layout_marginLeft="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+
+        </RadioGroup>
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtmobile"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Mobile"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="520dp"/>-->
+
+        <EditText
+            android:id="@+id/edtmobile"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="520dp"
+            android:hint="Enter Mobile no"
+            android:background="@android:color/white"
+            android:padding="12dp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtpwd"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Password"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="590dp"/>-->
+
+        <EditText
+            android:id="@+id/edtpwd"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:layout_marginTop="580dp"
+            android:background="@android:color/white"
+            android:padding="12dp" />
+
+
+        <Button
+            android:id="@+id/btnsignup"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="650dp"
+            android:layout_marginLeft="25dp"
+            android:backgroundTint="@color/white"
+            android:text="Sign Up"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
