@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">module4</string>
+    <string name="welcome_to_second_activity">Welcome to Second Activity</string>
+</resources>

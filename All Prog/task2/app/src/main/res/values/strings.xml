@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">task 2</string>
+    <string name="margherita_pizzas_n_n_extra_cheese_n_signature_pizza_sauce_n_sugar">Margherita pizzas\n \n Extra cheese \n signature pizza sauce\n sugar</string>
+    <string name="todo">TODO</string>
+</resources>

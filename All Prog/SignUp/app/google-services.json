@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "55613590699",
+    "firebase_url": "https://signupfirebase-5b64a-default-rtdb.firebaseio.com",
+    "project_id": "signupfirebase-5b64a",
+    "storage_bucket": "signupfirebase-5b64a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55613590699:android:15bd3f7870a05e7d383bee",
+        "android_client_info": {
+          "package_name": "com.example.signup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPybNcl4ONZsJi7jPI_guehjVrTfqp48E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55613590699:android:7fb23dee0c393313383bee",
+        "android_client_info": {
+          "package_name": "com.example.signup_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPybNcl4ONZsJi7jPI_guehjVrTfqp48E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

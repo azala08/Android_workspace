@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- First EditText -->
+        <EditText
+            android:id="@+id/et_start_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter starting value"
+            android:inputType="number" />
+
+        <!-- Second EditText -->
+        <EditText
+            android:id="@+id/et_end_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter ending value"
+            android:inputType="number" />
+
+        <!-- Button -->
+        <Button
+            android:id="@+id/btn_calculate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calculate" />
+
+        <!-- TextView to display the result -->
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Result will be displayed here"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:paddingTop="16dp" />
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

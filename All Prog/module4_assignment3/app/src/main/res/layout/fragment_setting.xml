@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".SettingFragment">
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:id="@+id/settingframe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Setting Fragment"
+        android:gravity="center"
+        android:textSize="50dp" />
+
+
+    <TextView
+        android:id="@+id/extratxtS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go To Home Fragment"
+        android:textColor="@color/white"
+        android:id="@+id/btnsetting"
+        android:layout_below="@id/settingframe"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        android:backgroundTint="#48B4A8"/>
+
+
+</RelativeLayout>
