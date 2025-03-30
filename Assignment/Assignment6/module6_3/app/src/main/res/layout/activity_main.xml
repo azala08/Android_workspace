@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#F5F5F5">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        android:padding="20dp"
+        android:layout_marginBottom="24dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: Not Available"
+            android:textSize="17dp"
+            android:textColor="#333333"
+            android:fontFamily="sans-serif-medium"
+            android:padding="12dp" />
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startServiceBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Location Service"
+        style="@style/Widget.MaterialComponents.Button"
+        app:cornerRadius="16dp"
+        android:backgroundTint="#6200EA"
+        android:textColor="#FFFFFF"
+        android:elevation="4dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/stopServiceBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Location Service"
+        style="@style/Widget.MaterialComponents.Button"
+        app:cornerRadius="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#7B1FA2"
+        android:textColor="#FFFFFF"
+        android:elevation="4dp"/>
+
+</LinearLayout>
