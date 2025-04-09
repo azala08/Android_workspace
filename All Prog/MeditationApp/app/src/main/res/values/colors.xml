@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="stressCard">#A290FF</color>
+    <color name="performanceCard">#FF865C</color>
+    <color name="happinessCard">#FFB547</color>
+    <color name="anxietyCard">#FFD97D</color>
+    <color name="growthCard">#6CB28E</color>
+    <color name="sleepCard">#4E4B66</color>
+
+</resources>
