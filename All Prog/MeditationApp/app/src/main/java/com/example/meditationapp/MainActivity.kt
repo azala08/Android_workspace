@@ -1,15 +1,21 @@
 package com.example.meditationapp
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.meditationapp.Activity.ReminderActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TopicAdapter
+    lateinit var tvClick : TextView
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,6 +33,13 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         adapter = TopicAdapter(topics)
         recyclerView.adapter = adapter
+
+
+
+        tvClick = findViewById(R.id.tvClick)
+        tvClick.setOnClickListener {
+            startActivity(Intent(applicationContext,ReminderActivity::class.java))
+        }
     }
 }
 
