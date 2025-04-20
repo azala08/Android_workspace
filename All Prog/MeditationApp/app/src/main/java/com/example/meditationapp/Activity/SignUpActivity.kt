@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.meditationapp.Fragment.SleepFragment
 import com.example.meditationapp.R
 
 class SignUpActivity : AppCompatActivity() {
@@ -46,7 +47,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this, "Sign up successful!", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, SignInActivity::class.java))
+                startActivity(Intent(this, SleepFragment::class.java))
                 finish()
             }
         }

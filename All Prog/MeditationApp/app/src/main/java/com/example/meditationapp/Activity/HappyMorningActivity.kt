@@ -9,7 +9,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.meditationapp.Adapter.SongAdapter
-import com.example.meditationapp.Adapter.VoicePagerAdapter
 import com.example.meditationapp.Model.Song
 import com.example.meditationapp.R
 import com.example.meditationapp.databinding.ActivityHappyMorningBinding
@@ -19,7 +18,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class HappyMorningActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHappyMorningBinding
-    private lateinit var viewPager: ViewPager2
+//    private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +27,8 @@ class HappyMorningActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupViews()
-        setupViewPager()
-        setupSongList()
+//        setupViewPager()
+//        setupSongList()
 
 
         binding.favoriteCount.setOnClickListener {
@@ -46,24 +45,24 @@ class HappyMorningActivity : AppCompatActivity() {
         binding.listeningCount.text = "34,234 Listening"
     }
 
-    private fun setupViewPager() {
-        viewPager = binding.voicePager
-        tabLayout = binding.voiceTabLayout
+//    private fun setupViewPager() {
+//        viewPager = binding.voicePager
+//        tabLayout = binding.voiceTabLayout
 
-        val pagerAdapter = VoicePagerAdapter(this)
-        viewPager.adapter = pagerAdapter
+//        val pagerAdapter = VoicePagerAdapter(this)
+//        viewPager.adapter = pagerAdapter
+//
+//        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+//            tab.text = if (position == 0) "MALE VOICE" else "FEMALE VOICE"
+//        }.attach()
+//    }
 
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = if (position == 0) "MALE VOICE" else "FEMALE VOICE"
-        }.attach()
-    }
-
-    private fun setupSongList() {
-        binding.songList.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = SongAdapter(getSongList())
-        }
-    }
+//    private fun setupSongList() {
+//        binding.songList.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = SongAdapter(getSongList())
+//        }
+//    }
 
     private fun getSongList(): List<Song> = listOf(
         Song("Focus Attention", "10 MIN"),
