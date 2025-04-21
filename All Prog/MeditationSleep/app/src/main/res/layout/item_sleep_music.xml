@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/sleepImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/night_island" />
+
+    <TextView
+        android:id="@+id/sleepTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="8dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sleepDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="45 MIN • SLEEP MUSIC"
+        android:textSize="14sp"
+        android:textColor="#BBBBBB"
+        android:paddingTop="4dp" />
+</LinearLayout>
