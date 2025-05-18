@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.HomeFragment"
+    android:scrollbars="none">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+       >
+
+        <LinearLayout
+            android:id="@+id/lytLinearLogoHomeFrag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            tools:ignore="UselessParent">
+
+            <!-- Logo and Greeting -->
+            <LinearLayout
+                android:id="@+id/layoutHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvHFsilent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/silent"
+                    android:textColor="#3F414E"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_13ssp"
+                    android:gravity="end"
+                    android:fontFamily="@font/airbnb_cereal_w_bd"
+                    android:paddingEnd="@dimen/_4sdp"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/ivSilent_moon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:contentDescription="@string/silent_moon_image"
+                    android:src="@drawable/logo"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:id="@+id/tvmoon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/moon"
+                    android:textColor="#3F414E"
+                    android:textSize="@dimen/_13ssp"
+                    android:fontFamily="@font/airbnb_cereal_w_bd"
+                    android:textStyle="bold"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/_4sdp"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/greeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:textColor="#3F414E"
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:text="@string/good_morning_afsar"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/subGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_24sdp"
+                android:text="@string/have_a_good_day"
+                android:fontFamily="@font/helvetica_neue_light"
+                android:textColor="#A1A4B2"
+                android:textSize="@dimen/_14ssp" />
+
+            <!-- Basics and Relaxation Cards -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_170sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/purple"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:id="@+id/tvBasics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_65sdp"
+                        android:text="@string/basics"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:fontFamily="@font/helvetica_neue_medium"
+                        android:textColor="@color/basic"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvBasics"
+                        android:text="@string/course"
+                        android:fontFamily="@font/helvetica_neue_medium"
+                        android:textColor="@color/course"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_below="@+id/tvCourse"
+                        >
+
+
+                    <TextView
+                        android:id="@+id/tvMin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/helvetica_neue_medium"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:textColor="@color/button_bg"
+                        android:letterSpacing="0.1"
+                        android:text="@string/_3_10_min"
+                        android:textSize="@dimen/_9ssp"/>
+
+                    <ImageView
+                        android:id="@+id/btnStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/btn"
+                        android:layout_toEndOf="@+id/tvMin"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:textSize="@dimen/_7ssp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                       />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_170sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/yellow"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:id="@+id/tvRelax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica_neue_medium"
+                        android:layout_marginTop="@dimen/_65sdp"
+                        android:text="@string/relaxation"
+                        android:textColor="@color/button"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvMusic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvRelax"
+                        android:text="@string/music_home"
+                        android:fontFamily="@font/helvetica_neue_medium"
+                        android:textColor="@color/button"
+                        android:textSize="@dimen/_10ssp" />
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_below="@+id/tvMusic"
+                        >
+                        <TextView
+                            android:id="@+id/tvMinn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:fontFamily="@font/helvetica_neue_medium"
+                            android:layout_marginStart="@dimen/_3sdp"
+                            android:textColor="@color/button"
+                            android:letterSpacing="0.1"
+                            android:text="@string/_3_10_min"
+                            android:textSize="@dimen/_9ssp" />
+
+                        <ImageView
+                            android:id="@+id/btnStartY"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/btny"
+                            android:layout_toEndOf="@+id/tvMinn"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:textSize="@dimen/_7ssp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- Daily Thought Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/black_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_16sdp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_thought"
+                        android:fontFamily="@font/helvetica_neue_medium"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica_neue_medium"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:text="@string/meditation_3_10_min"
+                        android:textColor="@color/white"
+                       android:letterSpacing="0.1"
+                        android:textSize="@dimen/_10ssp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_34sdp"
+                    android:contentDescription="@string/play_image"
+                    android:src="@drawable/play_btn" />
+            </LinearLayout>
+
+            <!-- Recommended for you section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:text="@string/recommended_for_you"
+                android:textColor="#3F414E"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+              />
+
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>

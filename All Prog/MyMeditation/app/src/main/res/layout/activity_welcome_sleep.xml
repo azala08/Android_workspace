@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainSleepMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/welcome_sleep"
+    tools:context=".activity.WelcomeSleepActivity">
+
+    <TextView
+        android:id="@+id/tvWelcomeSleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_to_sleep"
+        android:textColor="#E6E7F2"
+        android:textSize="@dimen/_22ssp"
+        android:fontFamily="@font/helvetica_neue_medium"
+        android:layout_marginTop="@dimen/_90sdp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/tvWelcomeSleepDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sleep_welcome_des"
+        android:textColor="#EBEAEC"
+        android:textSize="@dimen/_12ssp"
+        android:fontFamily="@font/helvetica_neue_light"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvWelcomeSleep"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:lineSpacingExtra="@dimen/_8sdp"
+        tools:ignore="RelativeOverlap" />
+
+
+    <ImageView
+        android:id="@+id/imgWelcomeBird"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/sleep_welcome_image"
+        android:src="@drawable/night_birds"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvWelcomeSleepDesc"
+        android:layout_marginTop="@dimen/_50sdp"/>
+
+    <Button
+        android:id="@+id/btnWelcomeSleep"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="@dimen/_55sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_43sdp"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/purple"
+        android:text="@string/get_started"
+        android:textColor="#F6F1FB"
+        android:textSize="@dimen/_10ssp"
+        android:fontFamily="@font/helvetica_neue_medium" />
+
+</RelativeLayout>

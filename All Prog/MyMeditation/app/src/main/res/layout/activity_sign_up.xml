@@ -1,0 +1,208 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/signUp"
+    android:background="@color/white"
+    tools:context=".activity.SignUpActivity"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:gravity="center_horizontal">
+
+        <!-- Back Button and Background -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_240sdp">
+
+            <ImageView
+                android:id="@+id/imgBackGround"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_210sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg"
+                android:contentDescription="@string/background_image" />
+
+            <ImageView
+                android:id="@+id/ibBackArrow"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:src="@drawable/back_arrow"
+                android:contentDescription="@string/back_arrow" />
+
+            <TextView
+                android:id="@+id/tvcreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_70sdp"
+                android:text="@string/create_acc"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold"
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:textColor="@color/_3f414e" />
+
+            <!-- Social Buttons -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnfb"
+                android:layout_width="@dimen/_280sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/purple3"
+                android:drawableStart="@drawable/facebook"
+                android:paddingStart="@dimen/_16sdp"
+                android:layout_below="@+id/tvcreate"
+                android:text="@string/facebook"
+                android:background="@drawable/white_rounded_border"
+                android:textColor="#F6F1FB"
+                android:fontFamily="@font/helvetica_neue_medium"
+                tools:ignore="RtlSymmetry" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btngoogle"
+                android:layout_width="@dimen/_280sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/white_rounded_border"
+                android:drawableStart="@drawable/google"
+                android:paddingStart="@dimen/_16sdp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/google"
+                android:stateListAnimator="@null"
+                android:textColor="@color/_3f414e"
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:layout_below="@+id/btnfb"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/or_log_in_with_email"
+            android:textAlignment="center"
+            android:layout_marginVertical="@dimen/_23sdp"
+            android:textColor="@color/grey4"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/helvetica_neue_medium"
+            android:textStyle="bold" />
+
+
+
+        <RelativeLayout
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_50sdp"
+            tools:ignore="RtlSymmetry">
+
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:hint="@string/name"
+                android:fontFamily="@font/helvetica_neue_light"
+                android:inputType="textPersonName"
+                android:textColor="#3F414E"
+                android:background="@drawable/input_field_bg"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_45sdp"
+                android:textColorHint="#A1A4B2"/>
+
+            <TextView
+                android:id="@+id/tvNameCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:text="@string/_00_50"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/_10ssp" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtEmailAddress"
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:hint="@string/email"
+            android:textColor="#3F414E"
+            android:inputType="textEmailAddress"
+            android:paddingEnd="@dimen/_15sdp"
+            android:fontFamily="@font/helvetica_neue_light"
+            android:background="@drawable/input_field_bg"
+            android:paddingStart="@dimen/_10sdp"
+            android:textColorHint="#A1A4B2" />
+
+        <EditText
+            android:id="@+id/edtPwd"
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/input_field_bg"
+            android:drawableEnd="@drawable/hide"
+            android:hint="@string/password"
+            android:textColor="#3F414E"
+            android:fontFamily="@font/helvetica_neue_light"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textColorHint="#A1A4B2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I have read the "
+                android:textColor="#A1A4B2"
+                android:fontFamily="@font/helvetica_neue_medium"/>
+
+            <TextView
+                android:id="@+id/tvPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/policy"
+                android:textColor="@color/purple3"
+                android:fontFamily="@font/helvetica_neue_medium" />
+
+            <CheckBox
+                android:id="@+id/chkcheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_90sdp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGetStart"
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/purple"
+            android:text="@string/get_started"
+            android:textColor="@color/f6f1fb"
+            android:fontFamily="@font/helvetica_neue_medium"
+             />
+    </LinearLayout>
+
+</ScrollView>
+
+

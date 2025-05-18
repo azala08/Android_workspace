@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/musicfragment"
+    android:layout_height="match_parent"
+    android:background="@color/play_option"
+    android:paddingTop="@dimen/_30sdp">
+
+
+        <ImageView
+            android:id="@+id/imgSleepMusicBackArrow"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:src="@drawable/arrow_back"
+            android:layout_marginHorizontal="@dimen/_9sdp"
+            tools:ignore="InvalidId" />
+
+        <TextView
+            android:id="@+id/tvSleepMusicTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/sleep_music"
+            android:textColor="#E6E7F2"
+            android:fontFamily="@font/helvetica_neue_medium"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rvMusicFragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/imgSleepMusicBackArrow"-->
+<!--            android:layout_marginTop="@dimen/_30sdp" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rvMusicFragment"
+                android:layout_below="@+id/tvSleepMusicTitle"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_30sdp"/>
+    </RelativeLayout>

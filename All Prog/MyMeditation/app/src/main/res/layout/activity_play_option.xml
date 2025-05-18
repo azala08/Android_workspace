@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/playoption"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/play_option"
+    tools:context=".activity.PlayOptionActivity">
+
+    <!-- Scrollable Content -->
+
+    <ScrollView
+        android:id="@+id/sleepScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnSleepPlay"
+        tools:ignore="ObsoleteLayoutParam"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Top Image with Back Arrow -->
+            <RelativeLayout
+                android:id="@+id/lyrRelativeSleepOption"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_205sdp"
+                android:background="@drawable/night_island_playoption">
+
+                <ImageButton
+                    android:id="@+id/imgSleepCourseBack"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:background="@drawable/arrow_back"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/for_move_to_back_activity"
+                    android:layout_marginTop="@dimen/_35sdp"/>
+
+                <!-- Favorite and Download Icons -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_35sdp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgSleepLike"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:contentDescription="@string/like_song"
+                        android:src="@drawable/select"
+                      />
+
+                    <ImageView
+                        android:id="@+id/imgPlayOpionDownload"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:contentDescription="@string/download_song"
+                        android:src="@drawable/download"
+                        android:layout_marginStart="@dimen/_16sdp"
+                    />
+                </LinearLayout>
+            </RelativeLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_marginStart="@dimen/_5ssp">
+            <!-- Title and Description -->
+
+            <TextView
+                android:id="@+id/tvSleepOptionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/night_island"
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:textSize="@dimen/_23ssp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_10sdp"/>
+
+            <TextView
+                android:id="@+id/tvSleepMusic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_45_min_u2022_sleep_music"
+                android:textColor="@color/sleep_option_text"
+
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:letterSpacing="0.02"
+                android:layout_marginTop="@dimen/_5sdp"/>
+
+            <TextView
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="wrap_content"
+                android:text="@string/ease_the_mind_into"
+                android:textColor="@color/sleep_option_text"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/helvetica_neue_light"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:lineSpacingExtra="@dimen/_6sdp" />
+
+            <!-- Likes and Listening Stats -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:layout_marginStart="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/imgHeart"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:contentDescription="@string/like"
+                    android:src="@drawable/sleep_heart"/>
+                <TextView
+                    android:id="@+id/tvSleepLikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_24_234_favorites"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/sleep_option_like"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/helvetica_neue_medium"
+                    android:layout_marginEnd="@dimen/_16sdp" />
+
+                <ImageView
+                    android:id="@+id/imgMusic"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:contentDescription="@string/music_icon"
+                    android:src="@drawable/sleep_music"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_34_234_listening"
+                    android:fontFamily="@font/helvetica_neue_medium"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/sleep_option_like" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@color/play_option_view"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/related"
+                android:textStyle="bold"
+                android:textColor="@color/sleep_option_like"
+                android:textSize="@dimen/_16ssp"
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:layout_marginTop="@dimen/_23sdp"
+                android:layout_marginStart="@dimen/_10sdp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSleepOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                />
+
+        </LinearLayout>
+        </LinearLayout>
+</ScrollView>
+
+    <!-- Fixed Button -->
+    <Button
+        android:id="@+id/btnSleepPlay"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_55sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/helvetica_neue_medium"
+        android:backgroundTint="@color/purple"
+        android:textColor="@color/play_sleep"
+        android:text="@string/play"
+        android:textSize="@dimen/_10ssp"/>
+</RelativeLayout>

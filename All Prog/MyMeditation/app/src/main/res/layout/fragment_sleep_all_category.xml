@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SleepAllCategoryFragment">
+
+
+    <FrameLayout
+        android:id="@+id/frameSleepAllCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/lytRelativeImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/imgSleepStory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/sleep_story_image"
+            android:src="@drawable/sleep_start"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            tools:ignore="NotSibling" />
+
+        <ImageView
+            android:id="@+id/imgSleepLock"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:contentDescription="@string/lock_image"
+            android:src="@drawable/lock"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_25sdp"/>
+
+        <TextView
+            android:id="@+id/tvSleepTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:fontFamily="@font/garamond_premier_pro_regular"
+            android:text="@string/the_ocean_moon"
+            android:textColor="@color/ocen_moon"
+            android:textSize="@dimen/_24ssp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_55sdp"/>
+
+        <TextView
+            android:id="@+id/tvSleepSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/non_stop_8_hour_mixes_of_our_most_popular_sleep_audio"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp"
+            android:fontFamily="@font/helvetica_neue_light"
+            android:layout_below="@+id/tvSleepTitle"
+            android:layout_centerHorizontal="true"
+            android:lineSpacingExtra="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"/>
+
+        <ImageView
+            android:id="@+id/btnSleepStart"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/button"
+            android:src="@drawable/start_sleep"
+            android:layout_below="@+id/tvSleepSubtitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_15sdp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSleepMusic"
+            android:layout_below="@+id/imgSleepStory"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_height="wrap_content"
+            />
+
+    </RelativeLayout>
+</FrameLayout>
+</ScrollView>

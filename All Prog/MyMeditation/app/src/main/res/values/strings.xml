@@ -1,0 +1,173 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">My Meditation</string>
+
+
+    <!--  Signup and Signin  -->
+    <string name="heading">We are what we do</string>
+    <string name="tagline">Thousand of people are using silent moon \n  for smalls meditation</string>
+    <string name="signup">SIGN UP</string>
+    <string name="login">LOG IN</string>
+    <string name="already_have_acc">ALREADY HAVE AN ACCOUNT?</string>
+    <string name="silent">S i l e n t</string>
+    <string name="moon">M o o n</string>
+
+    <!--  Signup  -->
+    <string name="welcome">Welcome Back!</string>
+    <string name="facebook">CONTINUE WITH FACEBOOK</string>
+    <string name="google">CONTINUE WITH GOOGLE</string>
+    <string name="log_email">OR LOG WITH IN EMAIL</string>
+    <string name="email">Email Address</string>
+    <string name="pwd">Password</string>
+    <string name="name">Name</string>
+    <string name="forgot_pwd">Forgot Password?</string>
+    <string name="have_acc">DON\'T HAVE AN ACCOUNT?</string>
+
+    <!--  SignIn  -->
+    <string name="get_started">GET STARTED</string>
+    <string name="create_acc">Create Your account</string>
+    <string name="read">i have read the</string>
+    <string name="policy">Privacy Policy</string>
+
+    <!--  welcome page  -->
+    <string name="hii">Hi Aditi, Welcome</string>>
+    <string name="to_moon">to Silent Moon</string>
+    <string name="explore">Explore the app, Find some peace of mind to\n \t\tprepare for meditation.</string>
+
+    <!--  Choose Topic   -->
+    <string name="whats">What\'s Brings you</string>>
+    <string name="to_silent">to Silent Moon?</string>
+    <string name="topic">choose the topic to focus on:</string>
+    <string name="count">00/50</string>
+
+    <!--  Home  -->
+    <string name="home">Home</string>
+    <string name="sleep">Sleep</string>
+    <string name="meditate">Meditate</string>
+    <string name="music">Music</string>
+    <string name="aditi">Aditi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--  grid view  -->
+    <string name="stress">Reduce Stress</string>
+    <string name="performance">Improve Performance</string>
+    <string name="happiness">Increase Happiness</string>
+    <string name="anxiety">Reduce Anxiety</string>
+    <string name="growth">Personal Growth</string>
+    <string name="batter_sleep">Batter Sleep</string>
+
+
+    <!--  home_fragment  -->
+    <string name="good_morning_afsar">Good Morning, Aditi</string>
+    <string name="have_a_good_day">We Wish you have a good day</string>
+    <string name="basics">Basics</string>
+    <string name="course">COURSE</string>
+    <string name="_3_10_min">3-10 MIN</string>
+    <string name="start">START</string>
+    <string name="relaxation">Relaxation</string>
+    <string name="music_home">MUSIC</string>
+    <string name="daily_thought">Daily Thought</string>
+    <string name="meditation_3_10_min" tools:ignore="TypographyDashes">MEDITATION • 3-10 MIN</string>
+    <string name="recommended_for_you">Recommended for you</string>
+
+
+    <string name="happy_morning">Happy Morning</string>
+    <string name="ease_the_mind_into">Ease the mind into a restful night’s sleep with these deep, ambient tones.</string>
+    <string name="_24_234_favorites">24,234 Favorites</string>
+    <string name="_34_234_listening">34,234 Listening</string>
+    <string name="pick_a_narrator">Pick a Narrator</string>
+    <string name="male_voice">MALE VOICE</string>
+    <string name="female_voice">FEMALE VOICE</string>
+
+
+    <string name="all">All</string>
+    <string name="we_can_learn_how_to_recognize_when_our_minds_nare_doing_their_normal_everyday_acrobatics">we can learn how to recognize when our minds\nare doing their normal everyday acrobatics.</string>
+    <string name="meditate_fg">Meditate</string>
+    <string name="_7_days_of_calm">7 DAYS OF CALM</string>
+    <string name="anxiet_release">Anxiety Release</string>
+    <string name="welcome_to_sleep">Welcome to Sleep</string>
+    <string name="focus_atteintion">Focus Atteintion</string>
+
+
+    <string name="sleep_welcome_des">  Explore the new king of sleep. It uses sound\nand vesualization to create perfect conditions\n \t\t\t\t\t\t\t\t\t\t\tfor refreshing sleep.</string>
+    <string name="my">My</string>
+    <string name="anxious">Anxious</string>
+    <string name="kids">Kids</string>
+    <string name="download">Download</string>
+    <string name="sleep_stories">Sleep Stories</string>
+    <string name="soothing_bedtime_stories_to_help_you_fall_n_into_a_deep_and_natural_sleep">Soothing bedtime stories to help you fall\n\t\t\t\t\t into a deep and natural sleep</string>
+    <string name="background_image">BackgroundImage</string>
+    <string name="for_move_to_back_activity">ForMovetobackActivity</string>
+    <string name="like_song">LikeSong</string>
+    <string name="download_song">DownloadSong</string>
+
+    <!-- res/values/strings.xml -->
+    <string name="default_web_client_id">your_actual_web_client_id_here</string>
+
+    <string name="meditate_category_icon">Meditate_Category_Icon</string>
+    <string name="like">like</string>
+    <string name="music_icon">MusicIcon</string>
+    <string name="welcome_image">WelcomeImage</string>
+    <string name="log_in">LOG IN</string>
+    <string name="back_arrow">BackArrow</string>
+    <string name="_00_50">00/50</string>
+    <string name="silent_moon_image">SilentMoonImage</string>
+    <string name="welcome_background_image">WelcomeBackgroundImage</string>
+    <string name="sleep_welcome_image">sleepWelcomeimage</string>
+    <string name="play_image">playImage</string>
+    <string name="daily_calm">Daily Calm</string>
+    <string name="focus_attention">Focus Attention</string>
+    <string name="_10_min">10 MIN</string>
+    <string name="meditate_grid_image">meditategridimage</string>
+    <string name="play_pause_image">play_pause_image</string>
+    <string name="backword">backword</string>
+    <string name="foreword">foreword</string>
+    <string name="cancel_image">cancleimage</string>
+    <string name="apr_30_pause_practice">APR 30 • PAUSE PRACTICE</string>
+    <string name="nav_home">navhome</string>
+    <string name="nav_sleep">navsleep</string>
+    <string name="nav_mediate">navmediate</string>
+    <string name="nav_music">navmusic</string>
+    <string name="nav_user">navuser</string>
+    <string name="sleep_story_image">sleepstoryimage</string>
+    <string name="the_ocean_moon">The Ocean Moon</string>
+    <string name="non_stop_8_hour_mixes_of_our_most_popular_sleep_audio">Non-stop 8- hour mixes of our\n\t\t\tmost popular sleep audio</string>
+    <string name="lock_image">lockimage</string>
+    <string name="sleep_category_image">sleepCategoryimage</string>
+    <string name="sweet_dreams">Sweet Dreams</string>
+    <string name="night_island">Night Island</string>
+    <string name="_45_min_sleep_music">45 MIN * SLEEP MUSIC</string>
+    <string name="related">Related</string>
+    <string name="play">PLAY</string>
+    <string name="aditi_gmail_com">aditi@gmail.com</string>
+    <string name="logout">LOGOUT</string>
+    <string name="sleep_music">Sleep Music</string>
+    <string name="ease_the_mind_into_a_restful_night_s_sleep_with_these_deep_ambient_tones">Ease the mind into a restful night’s sleep with these deep, ambient tones.</string>
+    <string name="_45_min_u2022_sleep_music">45 MIN • SLEEP MUSIC</string>
+    <string name="_01_30">01:30</string>
+    <string name="_45_00">45:00</string>
+    <string name="focus">Focus</string>
+    <string name="user">User</string>
+    <string name="or_log_in_with_email">OR LOG IN WITH EMAIL</string>
+    <string name="password">Password</string>
+    <string name="next_track">next track</string>
+    <string name="previous_track">previous track</string>
+    <string name="imagemusic">imagemusic</string>
+    <string name="artist">Artist</string>
+    <string name="previous">Previous</string>
+    <string name="play_pause">Play/pause</string>
+    <string name="next">Next</string>
+    <string name="meditation">Meditation</string>
+    <string name="cancleimage">cancleimage</string>
+    <string name="view">view</string>
+    <string name="my_fragment">My Fragment</string>
+    <string name="re_enter_password">Re-enter Password</string>
+    <string name="new_password">New Password</string>
+    <string name="save">Save</string>
+    <string name="enter_your_registered_email">Enter your registered email</string>
+    <string name="confirm">Confirm</string>
+    <string name="image">Image</string>
+    <string name="are_you_sure_you_want_to_logout">Sure You want to log out\n</string>
+
+</resources>

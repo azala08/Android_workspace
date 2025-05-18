@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="UseCompoundDrawables"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/_2sdp"
+    android:layout_marginTop="@dimen/_2sdp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/night_iceland"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/imgSleepCategory"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/helvetica_neue_medium"
+        android:textStyle="bold"
+        android:text="@string/night_island"
+        android:textColor="#E6E7F2"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+        android:id="@+id/tvSleepCategoryTitle"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:text="@string/_45_min_sleep_music"
+        android:textSize="@dimen/_8ssp"
+        android:fontFamily="@font/helvetica_neue_medium"
+        android:textColor="#98A1BD"
+        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+        android:id="@+id/tvSleepCategorySubtitle"/>
+
+</LinearLayout>
+
+
+
+
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgSleepCategory"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="@string/sleep_category_image"-->
+    <!--        android:src="@drawable/sweet_sleep" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvSleepCategoryTitle"-->
+    <!--        android:layout_width="177dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/_1sdp"-->
+    <!--        android:layout_marginTop="@dimen/_5sdp"-->
+    <!--        android:fontFamily="@font/helvetica_neue_medium"-->
+    <!--        android:text="@string/sweet_dreams"-->
+    <!--        android:textStyle="bold"-->
+    <!--        android:textColor="#E6E7F2"-->
+    <!--        android:textSize="@dimen/_13ssp" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvSleepCategorySubtitle"-->
+    <!--        android:layout_width="178dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/_1sdp"-->
+    <!--        android:fontFamily="@font/helvetica_neue_medium"-->
+    <!--        android:layout_marginTop="@dimen/_3sdp"-->
+    <!--        android:text="@string/_45_min_u2022_sleep_music"-->
+    <!--        android:textColor="#98A1BD"-->
+    <!--        android:textSize="@dimen/_9ssp" />-->

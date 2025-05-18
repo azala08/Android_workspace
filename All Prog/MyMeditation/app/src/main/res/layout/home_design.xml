@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:id="@+id/lytLinearDesignTopic"
+        android:theme="@style/Theme.MaterialComponents.Light">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10sdp"
+       android:layout_marginEnd="@dimen/_12sdp"
+        android:id="@+id/cvTopicCard"
+        app:cardElevation="0dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgHomeCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/yellow_card"
+            android:elevation="0dp"/>
+
+
+    </androidx.cardview.widget.CardView>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvHomeFocus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="#3F414E"
+        android:textStyle="bold"
+        android:text="@string/focus"
+        android:layout_marginStart="@dimen/_1sdp"
+        android:fontFamily="@font/helvetica_neue_medium"
+        android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvHomeMin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_1sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:textSize="@dimen/_9ssp"
+        android:text="@string/meditation_3_10_min"
+        android:textColor="@color/grey"
+
+        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+       />
+</LinearLayout>

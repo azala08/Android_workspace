@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+   <!--   signup and signin     -->
+
+    <color name="dark_grey">#3F414E</color>
+    <color name="grey">#A1A4B2</color>
+    <color name="sleep_grey">#586894</color>
+
+    <color name="grey2">#B0B0C3</color>
+    <color name="purple">#8E97FD</color>
+
+
+
+    <!--  Sign UP  -->
+    <color name="welcome_bg">#8C96FF</color>
+    <color name="dark_grey2">#3F414E</color>
+    <color name="purple2">#7583CA</color>
+    <color name="grey3">#F6F1FB</color>
+    <color name="grey4">#A1A4B2</color>
+    <color name="purple3">#7583CA</color>
+    <color name="grey5">#B0B0C3</color>
+
+    <!--  welcome page  -->
+
+    <color name="welcome">#8E97FD</color>
+    <color name="wel_heading">#FFECCC</color>
+    <color name="light_yellow">#FFECCC</color>
+    <color name="button">#3F414E</color>
+    <color name="button_bg">#EBEAEC</color>
+
+
+    <!-- Choose Topic  -->
+    <color name="stress">#8E97FD</color>
+    <color name="performance">#FA6E5A</color>
+    <color name="happiness">#FEB18F</color>
+    <color name="anxiety">#FFCF86</color>
+    <color name="growth">#6CB28E</color>
+    <color name="sleep">#3F414E</color>
+    <color name="stress2">#7583CA</color>
+    <color name="last">#D9A5B5</color>
+    <color name="text">#3F414E</color>
+    <color name="text2">#888888</color>
+
+    <color name="basic">#FFECCC</color>
+    <color name="course">#F7E8D0</color>
+    <color name="min">#EBEAEC</color>
+    <color name="sleep_story_heading">#E6E7F2</color>
+    <color name="Welcome_signin">#3E3E50</color>
+
+    <color name="sleep_nav">#03174D</color>
+    <color name="nav_text">#A0A3B1</color>
+    <color name="nav_card">#8E97FD</color>
+    <color name="ocen_moon">#FFE7BF</color>
+    <color name="play_option">#03174C</color>
+    <color name="sleep_option_text">#98A1BD</color>
+    <color name="sleep_option_like">#E6E7F2</color>
+    <color name="play_sleep">#F6F1FB</color>
+    <color name="user_nav">#CACFFF</color>
+    <color name="play_option_view">#98A1BD</color>
+    <color name="_7_days_of_calm">#A0A3B1</color>
+    <color name="_3f414e">#3F414E</color>
+    <color name="f6f1fb">#F6F1FB</color>
+    <color name="_8e97fd">#8E97FD</color>
+    <color name="a1a4b2">#A1A4B2</color>
+    <color name="_98a1bd">#98A1BD</color>
+
+
+<!--    card text color-->
+
+    <color name="purple_text">#FFECCC</color>
+    <color name="red">#FEF9F3</color>
+    <color name="orange">#3F414E</color>
+    <color name="green">#98A1BD</color>
+    <color name="black_text">#EBEAEC</color>
+    <color name="_47557e">#47557E</color>
+
+
+</resources>

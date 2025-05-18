@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragment.MeditateFragment">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="@dimen/_5sdp">
+
+            <!-- Header Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/_8sdp"
+                android:text="@string/meditate_fg"
+                android:textSize="@dimen/_25ssp"
+                android:textColor="#3F414E"
+                android:fontFamily="@font/helvetica_neue_medium"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/_30sdp"/>
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:paddingVertical="@dimen/_8sdp"
+                android:fontFamily="@font/helvetica_neue_light"
+                android:text="@string/we_can_learn_how_to_recognize_when_our_minds_nare_doing_their_normal_everyday_acrobatics"
+                android:textColor="#A0A3B1"
+                android:lineSpacingExtra="@dimen/_5sdp"
+                android:textSize="@dimen/_12ssp" />
+
+            <!-- Tabs -->
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvMeditateCategory"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="@dimen/_3sdp"
+         />
+
+            <FrameLayout
+                android:id="@+id/frameAllCategory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"/>
+
+        </LinearLayout>
+
+</FrameLayout>
+

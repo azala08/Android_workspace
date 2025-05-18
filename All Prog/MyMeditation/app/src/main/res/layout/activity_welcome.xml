@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainWelcome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/welcome_bg"
+    tools:context=".activity.WelcomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/lytLinearTopLogo"
+        android:gravity="center"
+        android:paddingTop="@dimen/_40sdp">
+
+        <!-- App Title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/_50sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/silent"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:textStyle="bold"
+                android:gravity="center"
+                tools:ignore="RtlSymmetry" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/logo2"
+                android:contentDescription="@string/silent_moon_image"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/moon"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:gravity="center"
+                tools:ignore="RtlSymmetry" />
+        </LinearLayout>
+
+        <!-- Welcome Text -->
+        <TextView
+            android:id="@+id/tvWelcomeUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hii"
+            android:textStyle="bold"
+            android:fontFamily="@font/helvetica_neue_medium"
+            android:textSize="@dimen/_20ssp"
+            android:textColor="@color/wel_heading"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/to_moon"
+            android:textSize="@dimen/_20ssp"
+            android:textColor="@color/light_yellow"
+            android:fontFamily="@font/helvetica_neue_light"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/_14sdp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/explore"
+            android:textSize="@dimen/_13ssp"
+            android:textColor="#EBEAEC"
+            android:textAlignment="center"
+            android:fontFamily="@font/helvetica_neue_light"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:lineSpacingExtra="@dimen/_8sdp"/>
+
+        <!-- Illustration -->
+        <ImageView
+            android:id="@+id/imgWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:contentDescription="@string/welcome_background_image"
+            android:src="@drawable/welcome" />
+    </LinearLayout>
+
+    <!-- Get Started Button -->
+    <Button
+        android:id="@+id/btnGetStarted"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_55sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:fontFamily="@font/helvetica_neue_medium"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:text="@string/get_started"
+        android:textColor="@color/button"
+        android:textSize="@dimen/_10ssp"
+        android:backgroundTint="@color/button_bg"/>
+</RelativeLayout>

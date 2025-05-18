@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameSleepStory"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragment.SleepFragment">
+
+    <RelativeLayout
+        android:id="@+id/lytSleepRelative"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_5sdp"
+        android:background="@drawable/sleep_story_bg"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/tvSleepStories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sleep_stories"
+            android:textStyle="bold"
+            android:textSize="@dimen/_22ssp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/sleep_story_heading"
+            android:layout_marginTop="@dimen/_65sdp"/>
+
+        <TextView
+            android:id="@+id/tvSleepStoriesDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/soothing_bedtime_stories_to_help_you_fall_n_into_a_deep_and_natural_sleep"
+            android:textSize="@dimen/_13ssp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/helvetica_neue_light"
+            android:textColor="@color/sleep_story_heading"
+            android:lineSpacingExtra="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_110sdp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSleepCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_below="@+id/tvSleepStoriesDesc"
+            android:layout_marginStart="@dimen/_4sdp"
+        />
+
+        <FrameLayout
+            android:id="@+id/frameSleepCategory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rvSleepCategory"/>
+    </RelativeLayout>
+</FrameLayout>
