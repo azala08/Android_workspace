@@ -75,7 +75,15 @@ class MusicService : Service() {
         if (musicList.isEmpty()) return
 
         val song = musicList[currentPosition]
-        mediaPlayer = MediaPlayer.create(this, song.audioResId).apply {
+        mediaPlayer = if (song.filePath.isNotBlank()) {
+            MediaPlayer().apply {
+                setDataSource(song.filePath)
+                prepare()
+            }
+        } else {
+            MediaPlayer.create(this, song.audioResId)
+        }
+            .apply {
             setOnCompletionListener {
                 next()
                 broadcastUpdate()

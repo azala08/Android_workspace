@@ -23,15 +23,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.mymeditation.LikedMusicViewModel
-import com.example.mymeditation.MusicViewModel
 import com.example.mymeditation.R
 import com.example.mymeditation.SetStatusBar
 import com.example.mymeditation.adapter.MusicItemAdapter
 import com.example.mymeditation.databinding.ActivityMusicPlayBinding
-import com.example.mymeditation.model.DownloadMusicEntity
 import com.example.mymeditation.model.MusicItem
 import com.example.mymeditation.service.MusicService
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 
 class MusicPlayActivity : AppCompatActivity() {
@@ -42,7 +42,6 @@ class MusicPlayActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var viewModel: LikedMusicViewModel
-    private lateinit var dbViewModel: MusicViewModel
     private lateinit var musicList: ArrayList<MusicItem>
     private var currentPosition: Int = 0
 
@@ -64,7 +63,6 @@ class MusicPlayActivity : AppCompatActivity() {
 
 
         viewModel = ViewModelProvider(this)[LikedMusicViewModel::class.java]
-        dbViewModel = ViewModelProvider(this)[MusicViewModel::class.java]
 
         SetStatusBar.fromActivity(this, false)
         applyWindowInsets(binding.mainMusicPlay)
@@ -82,11 +80,34 @@ class MusicPlayActivity : AppCompatActivity() {
         startService(intent)
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(downloadUpdateReceiver,
-            IntentFilter("DOWNLOAD_UPDATED"))
+        binding.imgMusicDownload.setOnClickListener {
+            val currentMusic = musicList[currentPosition]
+            val fileName = "${currentMusic.title}.mp3"
 
-        updateDownloadIcon()
-        downloadMusic()
+            val inputStream = resources.openRawResource(currentMusic.audioResId)
+            val downloadsDir = File(getExternalFilesDir(null), "MeditationDownloads")
+
+            if (!downloadsDir.exists()) downloadsDir.mkdirs()
+
+            val outputFile = File(downloadsDir, fileName)
+
+            try {
+                val outputStream = FileOutputStream(outputFile)
+                inputStream.copyTo(outputStream)
+                inputStream.close()
+                outputStream.close()
+                Toast.makeText(this, "Downloaded: ${outputFile.name}", Toast.LENGTH_SHORT).show()
+
+                // Optionally broadcast or update local DB
+                val intent = Intent("DOWNLOAD_COMPLETE")
+                intent.putExtra("downloaded_path", outputFile.absolutePath)
+                sendBroadcast(intent)
+
+            } catch (e: Exception) {
+                Toast.makeText(this, "Download failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
 
@@ -106,29 +127,6 @@ class MusicPlayActivity : AppCompatActivity() {
         override fun onServiceDisconnected(name: ComponentName?) {
             musicService = null
             isBound = false
-        }
-    }
-
-    private fun downloadMusic() {
-        binding.imgMusicDownload.setOnClickListener {
-            val currentSong = musicList[currentPosition]
-            lifecycleScope.launch {
-                val isAlreadyDownloaded = dbViewModel.isDownloaded(currentSong.audioResId)
-                if (isAlreadyDownloaded) {
-                    Toast.makeText(this@MusicPlayActivity, "This song is already downloaded.", Toast.LENGTH_SHORT).show()
-                    return@launch
-                }
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    if (checkSelfPermission(Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-                        requestFileCreation()
-                    } else {
-                        requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_AUDIO), 1002)
-                    }
-                } else {
-                    requestFileCreation()
-                }
-            }
         }
     }
 
@@ -157,94 +155,9 @@ class MusicPlayActivity : AppCompatActivity() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1003 && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                saveMusicFileToUri(uri)
-            }
-        }
-    }
 
-    private fun saveMusicFileToUri(uri: Uri) {
-        val currentSong = musicList[currentPosition]
-        val inputStream = resources.openRawResource(currentSong.audioResId)
-        showDownloadNotification("Download Started", "Downloading ${currentSong.title}", true, 101)
 
-        contentResolver.openOutputStream(uri)?.use { outputStream ->
-            try {
-                val buffer = ByteArray(4096)
-                var length: Int
-                while (inputStream.read(buffer).also { length = it } > 0) {
-                    outputStream.write(buffer, 0, length)
-                }
-                outputStream.flush()
 
-                lifecycleScope.launch {
-                    dbViewModel.addDownloaded(
-                        DownloadMusicEntity(
-                            audioResId = currentSong.audioResId,
-                            title = currentSong.title,
-                            imageResId = currentSong.imageResId
-                        )
-                    )
-
-                    // Broadcast update with the downloaded song ID
-                    val updateIntent = Intent("DOWNLOAD_UPDATED")
-                    updateIntent.putExtra("id", currentSong.audioResId)
-                    LocalBroadcastManager.getInstance(this@MusicPlayActivity).sendBroadcast(updateIntent)
-
-                    showDownloadNotification("Download Complete", "${currentSong.title} saved", false, 101)
-                    Toast.makeText(this@MusicPlayActivity, "Download Complete", Toast.LENGTH_SHORT).show()
-                }
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-                Toast.makeText(this, "Download Failed", Toast.LENGTH_SHORT).show()
-            } finally {
-                inputStream.close()
-            }
-        }
-    }
-
-    private fun updateDownloadIcon() {
-        if (musicList.isEmpty() || currentPosition !in musicList.indices) return
-        val currentSong = musicList[currentPosition]
-        lifecycleScope.launch {
-            val isDownloaded = dbViewModel.isDownloaded(currentSong.audioResId)
-            binding.imgMusicDownload.setImageResource(
-                if (isDownloaded) R.drawable.download_mark else R.drawable.download_music
-            )
-        }
-    }
-
-    private fun showDownloadNotification(title: String, content: String, isOngoing: Boolean, notificationId: Int) {
-        val channelId = "music_download_channel"
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, "Music Download Notifications", NotificationManager.IMPORTANCE_LOW)
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        val intent = Intent(this, MusicPlayActivity::class.java)
-        val pendingIntent = TaskStackBuilder.create(this).run {
-            addNextIntentWithParentStack(intent)
-            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        }
-
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.music)
-            .setContentTitle(title)
-            .setContentText(content)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(!isOngoing)
-            .setOngoing(isOngoing)
-            .setOnlyAlertOnce(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-
-        notificationManager.notify(notificationId, builder.build())
-    }
 
     private fun setupListeners() {
         binding.imgMusicPlay.setOnClickListener { sendControlAction(MusicService.ACTION_PLAY_PAUSE) }
@@ -279,7 +192,7 @@ class MusicPlayActivity : AppCompatActivity() {
         binding.tvCurrentTime.text = formatTime(musicService?.getCurrentPosition() ?: 0)
 
         updateLikeIcon()
-        updateDownloadIcon()
+
     }
 
     private fun startSeekBarUpdates() {
@@ -332,19 +245,11 @@ class MusicPlayActivity : AppCompatActivity() {
         }
     }
 
-    private val downloadUpdateReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val updatedId = intent?.getIntExtra("id", -1) ?: -1
-            val currentSong = musicList.getOrNull(currentPosition)
-            if (currentSong?.audioResId == updatedId) {
-                updateDownloadIcon()
-            }
-        }
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(downloadUpdateReceiver)
+
     }
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")

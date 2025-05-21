@@ -11,14 +11,15 @@ data class MusicItem(
     val isPlaying: Boolean = false,
     val imageResId: Int,
     val audioUrl: String = " ",
-    val audioResId: Int
+    val audioResId: Int,
+    val filePath: String = "" // Add this new field
 ) : Parcelable {
 
     override fun equals(other: Any?): Boolean {
-        return other is MusicItem && title == other.title && audioResId == other.audioResId
+        return other is MusicItem && title == other.title && (audioResId == other.audioResId || filePath == other.filePath)
     }
 
     override fun hashCode(): Int {
-        return 31 * title.hashCode() + audioResId
+        return 31 * title.hashCode() + audioResId + filePath.hashCode()
     }
 }

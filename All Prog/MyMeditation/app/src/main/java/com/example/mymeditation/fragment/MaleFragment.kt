@@ -1,9 +1,6 @@
 package com.example.mymeditation.fragment
 
-import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,8 +13,6 @@ import com.example.mymeditation.model.MusicItem
 import com.example.mymeditation.R
 import com.example.mymeditation.SetStatusBar
 import com.example.mymeditation.databinding.FragmentMaleBinding
-import com.example.mymeditation.service.MusicService
-
 
 class MaleFragment : Fragment() {
 
