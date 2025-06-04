@@ -1,0 +1,723 @@
+package com.example.shoppingapi.viewModel
+
+import android.app.Application
+import android.content.Context
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.shoppingapi.apiConfig.ApiClient
+import com.example.shoppingapi.apiConfig.ApiInterface
+import com.example.shoppingapi.database.AppDatabase
+import com.example.shoppingapi.model.ModelProduct
+import com.example.shoppingapi.objects.Utils // ખાતરી કરો કે આ import કરેલ છે
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class DashboardViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val productDao = AppDatabase.getDatabase(application).productDao()
+    private val apiInterface = ApiClient().getConnection().create(ApiInterface::class.java)
+
+    val productList: Flow<List<ModelProduct>> = productDao.getAllProducts()
+
+    private val _isNetworkError = MutableStateFlow(false)
+    val isNetworkError = _isNetworkError.asStateFlow()
+
+    private val LAST_SYNC_TIME_KEY = "last_sync_time"
+    private val SYNC_INTERVAL_MILLIS = 60 * 60 * 1000L // 1 hour in milliseconds
+
+    init {
+        viewModelScope.launch {
+            // Room માંથી productList ને observe કરો કે કોઈ ડેટા છે કે નહીં
+            productList.collect { products ->
+                // જો Room માં કોઈ ડેટા ન હોય અને ઇન્ટરનેટ ઉપલબ્ધ ન હોય, તો નેટવર્ક એરર બતાવો
+                if (products.isEmpty() && !Utils.isInternetAvailable(getApplication())) {
+                    _isNetworkError.value = true
+                } else {
+                    // જો ડેટા ઉપલબ્ધ હોય અથવા ઇન્ટરનેટ ઉપલબ્ધ હોય, તો નેટવર્ક એરર છુપાવો
+                    _isNetworkError.value = false
+                }
+                // હવે જરૂર પડ્યે ડેટા ફેચ/રીફ્રેશ કરવાનો પ્રયાસ કરો
+                fetchAndCacheProducts(forceRefresh = false)
+            }
+        }
+    }
+
+    suspend fun fetchAndCacheProducts(forceRefresh: Boolean = false) {
+        val lastSyncTime = getLastSyncTime()
+        val currentTime = System.currentTimeMillis()
+
+        // જો forceRefresh True હોય અથવા સમયગાળો પૂરો થયો હોય તો જ API માંથી ફેચ કરો
+        if (forceRefresh || (currentTime - lastSyncTime > SYNC_INTERVAL_MILLIS)) {
+            Log.d("DashboardViewModel", "Checking internet for API fetch...")
+            if (Utils.isInternetAvailable(getApplication())) {
+                Log.d("DashboardViewModel", "Internet available. Fetching products from API...")
+                withContext(Dispatchers.IO) {
+                    apiInterface.getViewProduct().enqueue(object : Callback<List<ModelProduct>> {
+                        override fun onResponse(
+                            call: Call<List<ModelProduct>>?,
+                            response: Response<List<ModelProduct>>
+                        ) {
+                            response.body()?.let { products ->
+                                viewModelScope.launch {
+                                    productDao.insertAll(products) // Room માં ઇન્સર્ટ કરો
+                                    setLastSyncTime(currentTime) // છેલ્લો sync સમય અપડેટ કરો
+                                    _isNetworkError.value = false // સફળતાપૂર્વક ફેચ થયું
+                                    Log.d("DashboardViewModel", "Products fetched and cached successfully.")
+                                }
+                            } ?: run {
+                                // નેટવર્ક એરર નથી, પરંતુ ખાલી પ્રતિભાવ મળ્યો. કેશ્ડ ડેટાને પ્રાધાન્ય આપો.
+                                Log.e("DashboardViewModel", "Empty response from API, but not a network error.")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<List<ModelProduct>>, t: Throwable) {
+                            _isNetworkError.value = true // વાસ્તવિક નેટવર્ક એરર
+                            Log.e("DashboardViewModel", "API call failed: ${t.message}")
+                        }
+                    })
+                }
+            } else {
+                Log.d("DashboardViewModel", "No internet. Using cached products.")
+                // જો ઇન્ટરનેટ ન હોય, તો હાલના કેશ્ડ ડેટા પર આધાર રાખો.
+                // _isNetworkError પહેલેથી જ productList observer દ્વારા સંભાળવામાં આવે છે જો products ખાલી હોય.
+            }
+        } else {
+            Log.d("DashboardViewModel", "Using cached products, no refresh needed.")
+            _isNetworkError.value = false // ખાતરી કરો કે કેશનો ઉપયોગ કરતી વખતે ભૂલની સ્થિતિ False છે
+        }
+    }
+
+    private fun getLastSyncTime(): Long {
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getLong(LAST_SYNC_TIME_KEY, 0L)
+    }
+
+    private fun setLastSyncTime(time: Long) {
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putLong(LAST_SYNC_TIME_KEY, time).apply()
+    }
+}
+==============================================================================================================================================================
+// DashboardActivity.kt માં
+// ... onCreate અથવા એક setup ફંક્શનની અંદર
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // products list ને observe કરો
+                launch {
+                    dashboardViewModel.productList.collectLatest { products ->
+                        // UI ને products સાથે અપડેટ કરો (દા.ત. dashboardAdapter.updateList(products))
+                        if (products.isNotEmpty()) {
+                            showContentState() // પ્રોડક્ટ્સ બતાવો
+                        } else {
+                            // જો productList ખાલી હોય, તો ViewModel ના _isNetworkError ને દૃશ્યતા હેન્ડલ કરવા દો
+                            if (!dashboardViewModel.isNetworkError.value) {
+                                showEmptyState() // જો કોઈ પ્રોડક્ટ્સ ન હોય પણ નેટવર્ક એરર ન હોય તો ખાલી સ્થિતિ બતાવો
+                            }
+                        }
+                    }
+                }
+
+                // નેટવર્ક એરર સ્ટેટ ને observe કરો
+                launch {
+                    dashboardViewModel.isNetworkError.collectLatest { isError ->
+                        if (isError) {
+                            showErrorState() // આ ખાસ કરીને નેટવર્ક એરર લેઆઉટ બતાવે છે
+                        } else {
+                            // જો ભૂલની સ્થિતિમાં ન હોય તો નેટવર્ક એરર છુપાવો.
+                            binding.lytNetworkError.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+// ... તમારા onCreate ફંક્શનમાં, setup binding અને viewModel પછી observeViewModel() ને કૉલ કરો
+// ઉદાહરણ તરીકે:
+// override fun onCreate(savedInstanceState: Bundle?) {
+//     super.onCreate(savedInstanceState)
+//     binding = ActivityDashboardBinding.inflate(layoutInflater)
+//     setContentView(binding.root)
+//     dashboardViewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
+//     setupToolbar()
+//     setupTabLayout()
+//     observeViewModel() // <--- આ ઉમેરો
+//     setupBottomNav()
+// }
+==============================================================================================================================================================
+package com.example.shoppingapi.repository
+
+import android.content.Context
+import android.util.Log
+import com.example.shoppingapi.database.AppDatabase
+import com.example.shoppingapi.dao.WishlistDao
+import com.example.shoppingapi.model.ModelProduct
+import com.example.shoppingapi.model.Rating
+import com.example.shoppingapi.model.WishlistItemEntity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+class WishlistRepository(private val context: Context) {
+
+    private val wishlistDao: WishlistDao = AppDatabase.getDatabase(context).wishlistDao()
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var firebaseListener: ValueEventListener? = null
+
+    // Room DB માંથી wishlist items ને Flow તરીકે expose કરો
+    fun getWishlistItems(): Flow<List<ModelProduct>> {
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId == null) {
+            Log.w("WishlistRepository", "User not logged in, returning empty wishlist flow.")
+            return emptyFlow()
+        }
+        return wishlistDao.getWishlistItems(userId).map { entities ->
+            entities.map { it.toModelProduct() } // Entity ને ModelProduct માં રૂપાંતરિત કરો
+        }
+    }
+
+    // સ્થાનિક રીતે કોઈ પ્રોડક્ટ wishlisted છે કે નહીં તે તપાસવા માટે
+    fun isProductWishlisted(productId: Int): Flow<Boolean> {
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId == null) {
+            return flowOf(false) // જો યુઝર લોગિન ન હોય તો false રીટર્ન કરો
+        }
+        return wishlistDao.isProductInWishlist(productId, userId)
+    }
+
+    suspend fun addProductToWishlist(product: ModelProduct) {
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId == null) {
+            Log.e("WishlistRepository", "User not logged in, cannot add to wishlist.")
+            return
+        }
+        val entity = product.toWishlistItemEntity(userId)
+        withContext(Dispatchers.IO) {
+            wishlistDao.insert(entity) // Room માં તરત જ ઇન્સર્ટ કરો
+            syncWishlistToFirebase(userId) // પછી Firebase પર સિંક કરવાનો પ્રયાસ કરો
+        }
+    }
+
+    suspend fun removeProductFromWishlist(product: ModelProduct) {
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId == null) {
+            Log.e("WishlistRepository", "User not logged in, cannot remove from wishlist.")
+            return
+        }
+        withContext(Dispatchers.IO) {
+            wishlistDao.delete(userId, product.id) // Room માંથી તરત જ ડીલીટ કરો
+            syncWishlistToFirebase(userId) // પછી Firebase પર સિંક કરવાનો પ્રયાસ કરો
+        }
+    }
+
+    // આ ફંક્શન Room માંથી આખી wishlist ને વાંચે છે અને તેને Firebase માં સેવ કરે છે
+    // Firebase Realtime DB ઑફલાઇન રાઇટ્સ અને ઑનલાઇન થવા પર ઑટોમેટિક સિંકિંગ હેન્ડલ કરે છે
+    private suspend fun syncWishlistToFirebase(userId: String) {
+        val localWishlist = wishlistDao.getUserWishlistSnapshot(userId) // હાલની Room wishlist મેળવો
+        val firebaseRef = firebaseDatabase.getReference("users/$userId/wishlist")
+        // Firebase માં ModelProduct ની list સ્ટોર કરો
+        firebaseRef.setValue(localWishlist.map { it.toModelProduct() })
+            .addOnSuccessListener { Log.d("WishlistRepository", "Wishlist synced to Firebase successfully.") }
+            .addOnFailureListener { e -> Log.e("WishlistRepository", "Failed to sync wishlist to Firebase: ${e.message}") }
+    }
+
+    // Firebase માં રીઅલ-ટાઇમ અપડેટ્સ સાંભળવાનું શરૂ કરે છે અને Room સાથે સિંક કરે છે
+    fun startFirebaseSync() {
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId == null) {
+            Log.w("WishlistRepository", "User not logged in, cannot start Firebase wishlist sync.")
+            return
+        }
+
+        // જો જૂનો listener હાજર હોય તો તેને દૂર કરો
+        firebaseListener?.let { firebaseDatabase.getReference("users/$userId/wishlist").removeEventListener(it) }
+
+        firebaseListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val firebaseWishlist = mutableListOf<ModelProduct>()
+                    snapshot.children.forEach { child ->
+                        child.getValue(ModelProduct::class.java)?.let {
+                            firebaseWishlist.add(it)
+                        }
+                    }
+                    Log.d("WishlistRepository", "Firebase data change detected. Syncing to Room. Items: ${firebaseWishlist.size}")
+
+                    // Room માં યુઝરની હાલની wishlist ને સાફ કરો અને Firebase માંથી નવો ડેટા દાખલ કરો
+                    // આ સુનિશ્ચિત કરે છે કે Room Firebase સાથે સુસંગત છે
+                    wishlistDao.clearUserWishlist(userId)
+                    if (firebaseWishlist.isNotEmpty()) {
+                        wishlistDao.insertAll(firebaseWishlist.map { it.toWishlistItemEntity(userId) })
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("WishlistRepository", "Firebase wishlist sync cancelled: ${error.message}")
+            }
+        }
+        firebaseDatabase.getReference("users/$userId/wishlist").addValueEventListener(firebaseListener as ValueEventListener)
+        Log.d("WishlistRepository", "Firebase wishlist listener started for user: $userId")
+    }
+
+    // Firebase listener ને બંધ કરે છે (મેમરી લીકેજ અટકાવવા માટે મહત્વપૂર્ણ)
+    fun stopFirebaseSync() {
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId != null) {
+            firebaseListener?.let { firebaseDatabase.getReference("users/$userId/wishlist").removeEventListener(it) }
+            firebaseListener = null
+            Log.d("WishlistRepository", "Firebase wishlist listener stopped for user: $userId")
+        }
+    }
+}
+
+// ModelProduct અને WishlistItemEntity વચ્ચે રૂપાંતરણ માટે એક્સટેન્શન ફંક્શન્સ
+fun ModelProduct.toWishlistItemEntity(userId: String): WishlistItemEntity {
+    return WishlistItemEntity(
+        id = this.id,
+        userId = userId,
+        category = this.category,
+        description = this.description,
+        image = this.image,
+        price = this.price,
+        ratingCount = this.rating.count,
+        ratingRate = this.rating.rate,
+        title = this.title
+    )
+}
+
+fun WishlistItemEntity.toModelProduct(): ModelProduct {
+    return ModelProduct(
+        id = this.id,
+        category = this.category,
+        description = this.description,
+        image = this.image,
+        price = this.price,
+        rating = Rating(this.ratingCount, this.ratingRate),
+        title = this.title
+    )
+}
+==============================================================================================================================================================
+package com.example.shoppingapi.objects
+
+import android.content.Context
+import com.example.shoppingapi.model.ModelProduct
+import com.example.shoppingapi.repository.WishlistRepository // નવી repository ને import કરો
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+
+// આને Application ક્લાસમાં એકવાર પ્રારંભ કરવો જોઈએ.
+object WishlistManager {
+    private lateinit var wishlistRepository: WishlistRepository
+    private val auth = FirebaseAuth.getInstance()
+
+    // repository ને પ્રારંભ કરો. આ આદર્શ રીતે તમારી Application ક્લાસમાં એકવાર કૉલ થવું જોઈએ.
+    fun initialize(context: Context) {
+        if (!::wishlistRepository.isInitialized) {
+            wishlistRepository = WishlistRepository(context.applicationContext)
+        }
+    }
+
+    // repository (Room DB) માંથી wishlist items ને Flow તરીકે expose કરો
+    fun getWishlistItemsFlow(): Flow<List<ModelProduct>> {
+        return wishlistRepository.getWishlistItems()
+    }
+
+    // repository માંથી isWishlisted ને Flow તરીકે expose કરો
+    fun isProductWishlistedFlow(productId: Int): Flow<Boolean> {
+        return wishlistRepository.isProductWishlisted(productId)
+    }
+
+    fun add(product: ModelProduct) {
+        CoroutineScope(Dispatchers.Main).launch { // UI-સંબંધિત પ્રતિસાદ માટે Main Dispatcher નો ઉપયોગ કરો
+            wishlistRepository.addProductToWishlist(product)
+        }
+    }
+
+    fun remove(product: ModelProduct) {
+        CoroutineScope(Dispatchers.Main).launch { // Main Dispatcher નો ઉપયોગ કરો
+            wishlistRepository.removeProductFromWishlist(product)
+        }
+    }
+
+    // આ આદર્શ રીતે યુઝર લોગિન પર અથવા જ્યારે એપ શરૂ થાય અને યુઝર લોગિન હોય ત્યારે કૉલ થવું જોઈએ
+    fun startSyncForCurrentUser() {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            wishlistRepository.startFirebaseSync()
+        }
+    }
+
+    fun stopSyncForCurrentUser() {
+        wishlistRepository.stopFirebaseSync()
+    }
+
+    // getAll ને સુસંગતતા માટે જાળવી રાખો, પરંતુ તે હવે Room માંથી ડેટા મેળવશે
+    // Flow નો ઉપયોગ રીઅલ-ટાઇમ અપડેટ્સ માટે કરવો જોઈએ
+    fun getAll(): List<ModelProduct> {
+        // આ એક synchronous કૉલ છે. ફ્લો માંથી ફેરફારોને ઑબ્ઝર્વ કરવા માટે getWishlistItemsFlow() નો ઉપયોગ કરો.
+        // જો ખરેખર synchronous સ્નેપશોટની જરૂર હોય, તો Room DAO માંથી suspend ફંક્શન સાથે fetch કરવું પડશે,
+        // પરંતુ Android UI થ્રેડમાં તે સામાન્ય રીતે નિરુત્સાહિત છે.
+        // હાલમાં, ખાલી સૂચિ પરત કરવી વધુ સારું છે કારણ કે રીઅલ-ટાઇમ અપડેટ્સ માટે Flow પર આધાર રાખવો જોઈએ.
+        return emptyList()
+    }
+}
+==============================================================================================================================================================
+// તમારી કસ્ટમ Application ક્લાસમાં (દા.ત. MyApplication.kt)
+import android.app.Application
+import com.example.shoppingapi.objects.WishlistManager
+
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        WishlistManager.initialize(this) // WishlistManager ને context સાથે પ્રારંભ કરો
+        // અન્ય પ્રારંભિકરણ
+    }
+}
+==============================================================================================================================================================
+package com.example.shoppingapi.activity
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.shoppingapi.R
+import com.example.shoppingapi.adapter.WishListAdapter
+import com.example.shoppingapi.databinding.ActivityWishListBinding
+import com.example.shoppingapi.objects.Utils
+import com.example.shoppingapi.objects.WishlistManager // આ import કરેલ છે તેની ખાતરી કરો
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
+class WishListActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityWishListBinding
+    private lateinit var adapter: WishListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityWishListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        init()
+        setupRecyclerView()
+        observeWishlistItems() // Repository/Room માંથી ફેરફારોને observe કરવાનું શરૂ કરો
+    }
+
+    private fun init() {
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = this.resources.getColor(R.color.theme_blue)
+    }
+
+    private fun setupRecyclerView() {
+        // context અને mutable list પસાર કરો. Adapter ને Flow દ્વારા અપડેટ કરવામાં આવશે.
+        adapter = WishListAdapter(this, mutableListOf()) { product ->
+            // જો જરૂર હોય તો આઇટમ ક્લિક હેન્ડલ કરો, દા.ત. FullScreenActivity પર નેવિગેટ કરો
+            val passDataIntent = Intent(this, FullScreenActivity::class.java).apply {
+                putExtra("id", product.id)
+                putExtra("title", product.title)
+                putExtra("image", product.image)
+                putExtra("description", product.description)
+                putExtra("price", product.price.toString())
+                putExtra("rate", product.rating.rate.toString())
+                putExtra("count", product.rating.count.toString())
+            }
+            startActivity(passDataIntent)
+        }
+        binding.rvWishItemsWishlist.layoutManager = GridLayoutManager(this, 2)
+        binding.rvWishItemsWishlist.adapter = adapter
+    }
+
+    private fun observeWishlistItems() {
+        lifecycleScope.launch {
+            WishlistManager.getWishlistItemsFlow().collectLatest { wishlistItems ->
+                if (wishlistItems.isEmpty()) {
+                    showEmptyState()
+                } else {
+                    binding.tvNoItemAddedWishlist.visibility = View.GONE
+                    binding.rvWishItemsWishlist.visibility = View.VISIBLE
+                    adapter.updateList(wishlistItems.toMutableList()) // નવા ડેટા સાથે adapter અપડેટ કરો
+                }
+
+                // જો ઇન્ટરનેટ ન હોય અને લિસ્ટ ખાલી હોય તો નેટવર્ક એરર બતાવવાનું વિચારો
+                binding.lytNetworkError.visibility =
+                    if (wishlistItems.isEmpty() && !Utils.isInternetAvailable(this@WishListActivity)) View.VISIBLE else View.GONE
+            }
+        }
+    }
+
+    fun showEmptyState() {
+        binding.tvNoItemAddedWishlist.visibility = View.VISIBLE
+        binding.rvWishItemsWishlist.visibility = View.GONE
+        binding.lytNetworkError.visibility = View.GONE // જો ખાલી સ્થિતિ બતાવવામાં આવે તો નેટવર્ક એરર છુપાવો
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // getData() ને સીધો કૉલ કરવાની જરૂર નથી, Flow અપડેટ્સને હેન્ડલ કરશે.
+        // જો પહેલેથી શરૂ ન થયો હોય તો Firebase sync શરૂ કરો (દા.ત. લોગિન પર)
+        WishlistManager.startSyncForCurrentUser()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // જ્યારે activity paused હોય ત્યારે Firebase sync બંધ કરો જેથી સંસાધનો બચે.
+        WishlistManager.stopSyncForCurrentUser()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(applicationContext, DashboardActivity::class.java))
+        finish()
+    }
+}
+==============================================================================================================================================================
+package com.example.shoppingapi.adapter
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.shoppingapi.R
+import com.example.shoppingapi.activity.FullScreenActivity
+import com.example.shoppingapi.activity.WishListActivity
+import com.example.shoppingapi.databinding.DesignRelatedProductBinding
+import com.example.shoppingapi.model.ModelProduct
+import com.example.shoppingapi.objects.WishlistManager // આ import કરેલ છે તેની ખાતરી કરો
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class WishListAdapter(
+    private val context: Context,
+    private var products: MutableList<ModelProduct>, // આ સૂચિ Flow દ્વારા અપડેટ કરવામાં આવશે
+    private val onItemClick: (ModelProduct) -> Unit // એક આઇટમ ક્લિક listener ઉમેરો
+) : RecyclerView.Adapter<WishListAdapter.WishlistViewHolder>() {
+
+    inner class WishlistViewHolder(val binding: DesignRelatedProductBinding) : RecyclerView.ViewHolder(binding.root)
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newList: MutableList<ModelProduct>) {
+        products = newList
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistViewHolder {
+        val inflater = LayoutInflater.from(context)
+        val binding = DesignRelatedProductBinding.inflate(inflater, parent, false)
+        return WishlistViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: WishlistViewHolder, position: Int) {
+        val product = products[position]
+
+        holder.binding.tvTitleItemRelatedProduct.text = product.title
+        holder.binding.tvDescriptionItemRelatedProduct.text = product.description
+        holder.binding.tvPriceItemRelatedProduct.text = "₹${product.price}"
+        // holder.binding.tv.text = "${product.rating.rate} ★" // રેટિંગ માટે tv છે તેમ માનીને
+
+        Glide.with(context)
+            .load(product.image)
+            .placeholder(R.drawable.img_view)
+            .into(holder.binding.ivItemRelatedProduct)
+
+        // જો આ સૂચિ wishlist માંથી આવે છે, તો હંમેશા liked icon બતાવો
+        holder.binding.ivLikeItemRelatedProduct.setImageResource(R.drawable.liked)
+
+        holder.binding.ivLikeItemRelatedProduct.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                WishlistManager.remove(product) // WishlistManager માંથી દૂર કરો (જે Room અને Firebase ને અપડેટ કરે છે)
+                Toast.makeText(context, "Removed from Wishlist", Toast.LENGTH_SHORT).show()
+                // WishListActivity માં Flow observation માંથી updateList() કૉલ સૂચિને ફરીથી render કરશે
+                // અહીં products માંથી મેન્યુઅલી remove કરવાની અને notifyItemRemoved કરવાની જરૂર નથી.
+            }
+        }
+
+        holder.binding.root.setOnClickListener {
+            onItemClick(product) // આઇટમ ક્લિક હેન્ડલ કરો
+        }
+    }
+
+    override fun getItemCount(): Int = products.size
+}
+==============================================================================================================================================================
+package com.example.shoppingapi.adapter
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.shoppingapi.R
+import com.example.shoppingapi.activity.FullScreenActivity
+import com.example.shoppingapi.databinding.DesignDashboardBinding
+import com.example.shoppingapi.model.ModelProduct
+import com.example.shoppingapi.objects.WishlistManager // આ import કરેલ છે તેની ખાતરી કરો
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+
+class DashboardAdapter(
+    private var context: Context,
+    private var productList: List<ModelProduct>,
+    private val lifecycleScope: LifecycleCoroutineScope // Activity/Fragment માંથી lifecycleScope પસાર કરો
+) : RecyclerView.Adapter<DashboardAdapter.ProductViewHolder>() {
+
+    inner class ProductViewHolder(val binding: DesignDashboardBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        return ProductViewHolder(DesignDashboardBinding.inflate(LayoutInflater.from(context), parent, false))
+    }
+
+    override fun getItemCount(): Int = productList.size
+
+    @SuppressLint("SetTextI18n") // Typo fix: SetTextI180 -> SetTextI18n
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        val product = productList[position]
+        holder.binding.tvTitleItemView.text = product.title
+        holder.binding.tvDescriptionItemView.text = product.description
+        holder.binding.tvPriceItemView.text = "₹${product.price}"
+
+        Glide.with(holder.binding.root.context)
+            .load(product.image)
+            .placeholder(R.drawable.img_view)
+            .into(holder.binding.ivItemView)
+
+        // આ ચોક્કસ પ્રોડક્ટ માટે wishlist સ્થિતિને observe કરો
+        lifecycleScope.launch {
+            WishlistManager.isProductWishlistedFlow(product.id).collectLatest { isWishlisted ->
+                holder.binding.ivLikeItemView.setImageResource(
+                    if (isWishlisted) R.drawable.liked else R.drawable.like
+                )
+            }
+        }
+
+        holder.binding.root.setOnClickListener {
+            val passDataIntent = Intent(context, FullScreenActivity::class.java).apply {
+                putExtra("id", product.id)
+                putExtra("title", product.title)
+                putExtra("image", product.image)
+                putExtra("description", product.description)
+                putExtra("price", product.price.toString())
+                putExtra("rate", product.rating.rate.toString())
+                putExtra("count", product.rating.count.toString())
+            }
+            context.startActivity(passDataIntent)
+        }
+
+        holder.binding.ivLikeItemView.setOnClickListener {
+            toggleWishlistItem(holder, product)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newList: List<ModelProduct>) {
+        productList = newList
+        notifyDataSetChanged()
+    }
+
+    private fun toggleWishlistItem(holder: ProductViewHolder, product: ModelProduct) {
+        // toggle operation માટે coroutine scope નો ઉપયોગ કરો
+        CoroutineScope(Dispatchers.Main).launch {
+            // Flow માંથી હાલની wishlist સ્થિતિ મેળવો
+            val isCurrentlyWishlisted = WishlistManager.isProductWishlistedFlow(product.id).firstOrNull() ?: false
+            if (isCurrentlyWishlisted) {
+                WishlistManager.remove(product)
+                Toast.makeText(context, "Removed from Wishlist", Toast.LENGTH_SHORT).show()
+            } else {
+                WishlistManager.add(product)
+                Toast.makeText(context, "Added to Wishlist", Toast.LENGTH_SHORT).show()
+            }
+            // icon update onBindViewHolder માં collectLatest બ્લોક દ્વારા હેન્ડલ કરવામાં આવશે
+            // જ્યારે Room DB નવી સ્થિતિ emit કરશે.
+        }
+    }
+}
+==============================================================================================================================================================
+// ProductCategoryFragment.kt માં
+// ...
+    private fun setupRecyclerView() {
+        // અહીં lifecycleScope પસાર કરો
+        dashboardAdapter = DashboardAdapter(requireContext(), emptyList(), viewLifecycleOwner.lifecycleScope)
+        binding.recyclerView.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2) // Or LinearLayoutManager
+            adapter = dashboardAdapter
+        }
+    }
+// ...
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
+
+==============================================================================================================================================================
